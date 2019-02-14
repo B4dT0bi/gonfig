@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/B4dT0bi/gonfig.svg?branch=master)](https://travis-ci.org/B4dT0bi/gonfig) [![Go Report Card](https://goreportcard.com/badge/github.com/B4dT0bi/gonfig)](https://goreportcard.com/report/github.com/B4dT0bi/gonfig) [![code-coverage](http://gocover.io/_badge/github.com/B4dT0bi/gonfig)](http://gocover.io/github.com/B4dT0bi/gonfig) [![go-doc](https://godoc.org/github.com/B4dT0bi/gonfig?status.svg)](https://godoc.org/github.com/B4dT0bi/gonfig)
+[![Build Status](https://travis-ci.org/B4dT0bi/gonfig.svg?branch=master)](https://travis-ci.org/B4dT0bi/gonfig) [![Go Report Card](https://goreportcard.com/badge/github.com/B4dT0bi/gonfig)](https://goreportcard.com/report/github.com/B4dT0bi/gonfig) [![code-coverage](http://gocover.io/_badge/github.com/B4dT0bi/gonfig)](http://gocover.io/github.com/B4dT0bi/gonfig/) [![go-doc](https://godoc.org/github.com/B4dT0bi/gonfig?status.svg)](https://godoc.org/github.com/B4dT0bi/gonfig)
 
 # gonfig
 
