@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/B4dT0bi/gonfig.svg?branch=master)](https://travis-ci.org/B4dT0bi/gonfig)
+
 # gonfig
 
 gonfig is a lightweight Golang package for intergrating both JSON configs and enviornment variables into one config object.
@@ -33,11 +35,11 @@ $ docker run [...] -e Connection_String="..." [...]
 To make this simple for developers we can use gonfig to easily fill in our struct.
 
 ```bash
-$ go get github.com/tkanos/gonfig
+$ go get github.com/B4dT0bi/gonfig
 ```
 
 ```golang
-import "github.com/tkanos/gonfig"
+import "github.com/B4dT0bi/gonfig"
 
 configuration := Configuration{}
 err := gonfig.GetConf("pathtomyjonfile.json", &configuration)
