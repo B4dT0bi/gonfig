@@ -52,183 +52,183 @@ func Test_GetFromYAML_Filename_Should_Not_be_Panic(t *testing.T) {
 
 func Test_getFromEnvVariables_should_not_panic_if_wrong_data(t *testing.T) {
 	type Conf struct {
-		Id int
+		ID int
 	}
-	os.Setenv("Id", "abc")
+	os.Setenv("ID", "abc")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 0 {
-		t.Error("Id should be 0", conf.Id)
+	if conf.ID != 0 {
+		t.Error("ID should be 0", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_int(t *testing.T) {
 	type Conf struct {
-		Id int
+		ID int
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_int16(t *testing.T) {
 	type Conf struct {
-		Id int16
+		ID int16
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_int32(t *testing.T) {
 	type Conf struct {
-		Id int32
+		ID int32
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_int64(t *testing.T) {
 	type Conf struct {
-		Id int64
+		ID int64
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_uint(t *testing.T) {
 	type Conf struct {
-		Id uint
+		ID uint
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_uint16(t *testing.T) {
 	type Conf struct {
-		Id uint16
+		ID uint16
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_uint32(t *testing.T) {
 	type Conf struct {
-		Id uint32
+		ID uint32
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_uint64(t *testing.T) {
 	type Conf struct {
-		Id uint64
+		ID uint64
 	}
-	os.Setenv("Id", "123")
+	os.Setenv("ID", "123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_bool(t *testing.T) {
 	type Conf struct {
-		Id bool
+		ID bool
 	}
-	os.Setenv("Id", "true")
+	os.Setenv("ID", "true")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != true {
-		t.Error("Id should be true", conf.Id)
+	if conf.ID != true {
+		t.Error("ID should be true", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_float32(t *testing.T) {
 	type Conf struct {
-		Id float32
+		ID float32
 	}
-	os.Setenv("Id", "123.123")
+	os.Setenv("ID", "123.123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123.123 {
-		t.Error("Id should be 123.123", conf.Id)
+	if conf.ID != 123.123 {
+		t.Error("ID should be 123.123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_float64(t *testing.T) {
 	type Conf struct {
-		Id float64
+		ID float64
 	}
-	os.Setenv("Id", "123.123")
+	os.Setenv("ID", "123.123")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != 123.123 {
-		t.Error("Id should be 123.123", conf.Id)
+	if conf.ID != 123.123 {
+		t.Error("ID should be 123.123", conf.ID)
 	}
 }
 
 func Test_getFromEnvVariables_should_find_and_parse_string(t *testing.T) {
 	type Conf struct {
-		Id string
+		ID string
 	}
-	os.Setenv("Id", "abc")
+	os.Setenv("ID", "abc")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != "abc" {
-		t.Error("Id should be abc", conf.Id)
+	if conf.ID != "abc" {
+		t.Error("ID should be abc", conf.ID)
 	}
 }
 
 func Test_getFromCustomEnvVariables_should_find_and_parse_string(t *testing.T) {
 	type Conf struct {
-		Id string `env:"CONF_ID"`
+		ID string `env:"CONF_ID"`
 	}
 	os.Setenv("CONF_ID", "abc")
 	conf := Conf{}
 	getFromEnvVariables(&conf)
 
-	if conf.Id != "abc" {
-		t.Error("Id should be abc", conf.Id)
+	if conf.ID != "abc" {
+		t.Error("ID should be abc", conf.ID)
 	}
 }
 
@@ -253,11 +253,11 @@ func Test_getFromArguments_should_find_and_parse_string(t *testing.T) {
 
 func Test_getFromCustomArguments_should_find_and_parse_string(t *testing.T) {
 	type Conf struct {
-		ID  string `arg:"confId"`
-		ID2 string `arg:"confId2"`
+		ID  string `arg:"confID"`
+		ID2 string `arg:"confID2"`
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--confId=abc", "--confId2", "def"}
+	os.Args = []string{"cmd", "--confID=abc", "--confID2", "def"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
@@ -272,11 +272,11 @@ func Test_getFromCustomArguments_should_find_and_parse_string(t *testing.T) {
 
 func Test_getFromCustomArguments_should_not_find_string(t *testing.T) {
 	type Conf struct {
-		ID  string `arg:"confId"`
-		ID2 string `arg:"confId2"`
+		ID  string `arg:"confID"`
+		ID2 string `arg:"confID2"`
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--confId=abc"}
+	os.Args = []string{"cmd", "--confID=abc"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	conf.ID2 = "def"
@@ -292,229 +292,233 @@ func Test_getFromCustomArguments_should_not_find_string(t *testing.T) {
 
 func Test_getFromArguments_should_not_panic_if_wrong_data(t *testing.T) {
 	type Conf struct {
-		Id  int
-		Id2 int
+		ID  int
+		ID2 int
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=abc", "--Id2", "def"}
+	os.Args = []string{"cmd", "--ID=abc", "--ID2", "def"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 0 {
-		t.Error("Id should be 0", conf.Id)
+	if conf.ID != 0 {
+		t.Error("ID should be 0", conf.ID)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_int(t *testing.T) {
 	type Conf struct {
-		Id  int
-		Id2 int
+		ID  int
+		ID2 int
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_int16(t *testing.T) {
 	type Conf struct {
-		Id  int16
-		Id2 int16
+		ID  int16
+		ID2 int16
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_int32(t *testing.T) {
 	type Conf struct {
-		Id  int32
-		Id2 int32
+		ID  int32
+		ID2 int32
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_int64(t *testing.T) {
 	type Conf struct {
-		Id  int64
-		Id2 int64
+		ID  int64
+		ID2 int64
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_uint(t *testing.T) {
 	type Conf struct {
-		Id  uint
-		Id2 uint
+		ID  uint
+		ID2 uint
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_uint16(t *testing.T) {
 	type Conf struct {
-		Id  uint16
-		Id2 uint16
+		ID  uint16
+		ID2 uint16
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_uint32(t *testing.T) {
 	type Conf struct {
-		Id  uint32
-		Id2 uint32
+		ID  uint32
+		ID2 uint32
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_uint64(t *testing.T) {
 	type Conf struct {
-		Id  uint64
-		Id2 uint64
+		ID  uint64
+		ID2 uint64
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123", "--Id2", "456"}
+	os.Args = []string{"cmd", "--ID=123", "--ID2", "456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123 {
-		t.Error("Id should be 123", conf.Id)
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
 	}
-	if conf.Id2 != 456 {
-		t.Error("Id2 should be 456", conf.Id2)
+	if conf.ID2 != 456 {
+		t.Error("ID2 should be 456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_bool(t *testing.T) {
 	type Conf struct {
-		Id  bool
-		Id2 bool
-		Id3 bool
+		ID  bool
+		ID2 bool
+		ID3 bool
+		ID4 bool
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=true", "--Id2", "true", "--Id3"}
+	os.Args = []string{"cmd", "--ID=true", "--ID2", "true", "--ID3", "--ID4"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != true {
-		t.Error("Id should be true", conf.Id)
+	if conf.ID != true {
+		t.Error("ID should be true", conf.ID)
 	}
-	if conf.Id2 != true {
-		t.Error("Id2 should be true", conf.Id2)
+	if conf.ID2 != true {
+		t.Error("ID2 should be true", conf.ID2)
 	}
-	if conf.Id3 != true {
-		t.Error("Id3 should be true", conf.Id3)
+	if conf.ID3 != true {
+		t.Error("ID3 should be true", conf.ID3)
+	}
+	if conf.ID4 != true {
+		t.Error("ID4 should be true", conf.ID4)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_float32(t *testing.T) {
 	type Conf struct {
-		Id  float32
-		Id2 float32
+		ID  float32
+		ID2 float32
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123.123", "--Id2", "456.456"}
+	os.Args = []string{"cmd", "--ID=123.123", "--ID2", "456.456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123.123 {
-		t.Error("Id should be 123.123", conf.Id)
+	if conf.ID != 123.123 {
+		t.Error("ID should be 123.123", conf.ID)
 	}
-	if conf.Id2 != 456.456 {
-		t.Error("Id should be 456.456", conf.Id2)
+	if conf.ID2 != 456.456 {
+		t.Error("ID should be 456.456", conf.ID2)
 	}
 }
 
 func Test_getFromArguments_should_find_and_parse_float64(t *testing.T) {
 	type Conf struct {
-		Id  float64
-		Id2 float64
+		ID  float64
+		ID2 float64
 	}
 	oldArgs := os.Args
-	os.Args = []string{"cmd", "--Id=123.123", "--Id2", "456.456"}
+	os.Args = []string{"cmd", "--ID=123.123", "--ID2", "456.456"}
 	defer func() { os.Args = oldArgs }()
 	conf := Conf{}
 	getFromArguments(&conf)
 
-	if conf.Id != 123.123 {
-		t.Error("Id should be 123.123", conf.Id)
+	if conf.ID != 123.123 {
+		t.Error("ID should be 123.123", conf.ID)
 	}
-	if conf.Id2 != 456.456 {
-		t.Error("Id should be 456.456", conf.Id2)
+	if conf.ID2 != 456.456 {
+		t.Error("ID should be 456.456", conf.ID2)
 	}
 }

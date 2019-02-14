@@ -1,6 +1,5 @@
 // Package gonfig implements simple configuration reading
-// from both JSON files and enviornment variables.
-
+// from both JSON files and environment variables.
 package gonfig
 
 import (
@@ -18,7 +17,7 @@ import (
 const envTagName = "env"
 const argTagName = "arg"
 
-// GetConf aggregates all the JSON and enviornment variable values
+// GetConf aggregates all the JSON and environment variable values
 // and puts them into the passed interface.
 func GetConf(filename string, configuration interface{}) (err error) {
 
