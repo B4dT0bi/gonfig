@@ -9,12 +9,14 @@ import (
 	"os"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/ghodss/yaml"
 )
 
 // tag name to override the field name of an environment variable
 const envTagName = "env"
+const argTagName = "arg"
 
 // GetConf aggregates all the JSON and enviornment variable values
 // and puts them into the passed interface.
@@ -26,6 +28,9 @@ func GetConf(filename string, configuration interface{}) (err error) {
 	}
 
 	err = getFromYAML(filename, configuration)
+	if err == nil {
+		getFromArguments(configuration)
+	}
 	if err == nil {
 		getFromEnvVariables(configuration)
 	}
@@ -56,7 +61,38 @@ func getFromYAML(filename string, configuration interface{}) (err error) {
 	return
 }
 
+func getFromArguments(configuration interface{}) {
+	getFromEnvVariablesOrArguments(argTagName, getFromArg, configuration)
+}
+
 func getFromEnvVariables(configuration interface{}) {
+	getFromEnvVariablesOrArguments(envTagName, getFromEnv, configuration)
+}
+
+type getData func(string) string
+
+func getFromEnv(key string) string {
+	return os.Getenv(key)
+}
+
+func getFromArg(key string) string {
+	for i := range os.Args {
+		if strings.HasPrefix(os.Args[i], ("--" + key + "=")) {
+			return os.Args[i][len(key)+3:]
+		} else if os.Args[i] == ("--" + key) {
+			if len(os.Args) > i+1 {
+				if strings.HasPrefix(os.Args[i+1], "-") {
+					return "true"
+				}
+				return os.Args[i+1]
+			}
+			return "true"
+		}
+	}
+	return ""
+}
+
+func getFromEnvVariablesOrArguments(tagName string, fnGetData getData, configuration interface{}) {
 	typ := reflect.TypeOf(configuration)
 	// if a pointer to a struct is passed, get the type of the dereferenced object
 	if typ.Kind() == reflect.Ptr {
@@ -67,12 +103,12 @@ func getFromEnvVariables(configuration interface{}) {
 		p := typ.Field(i)
 
 		// check if we've got a field name override for the environment
-		tagContent := p.Tag.Get(envTagName)
+		tagContent := p.Tag.Get(tagName)
 		value := ""
 		if len(tagContent) > 0 {
-			value = os.Getenv(tagContent)
+			value = fnGetData(tagContent)
 		} else {
-			value = os.Getenv(p.Name)
+			value = fnGetData(p.Name)
 		}
 
 		if !p.Anonymous && len(value) > 0 {
