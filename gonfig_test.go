@@ -522,3 +522,15 @@ func Test_getFromArguments_should_find_and_parse_float64(t *testing.T) {
 		t.Error("ID should be 456.456", conf.ID2)
 	}
 }
+
+func Test_getFromDefaults_should_find_and_parse_float32(t *testing.T) {
+	type Conf struct {
+		ID float32 `default:"123.123"`
+	}
+	conf := Conf{}
+	setDefaults(&conf)
+
+	if conf.ID != 123.123 {
+		t.Error("ID should be 123.123", conf.ID)
+	}
+}

@@ -16,24 +16,43 @@ import (
 // tag name to override the field name of an environment variable
 const envTagName = "env"
 const argTagName = "arg"
+const defaultTagName = "default"
 
 // GetConf aggregates all the JSON and environment variable values
 // and puts them into the passed interface.
-func GetConf(filename string, configuration interface{}) (err error) {
+func GetConf(configuration interface{}) (err error) {
+	GetConfByFilename(getProgramName()+".json", configuration)
+	return
+}
+
+// GetConfByFilename aggregates all the JSON and environment variable values
+// and puts them into the passed interface.
+func GetConfByFilename(filename string, configuration interface{}) (err error) {
 
 	configValue := reflect.ValueOf(configuration)
 	if typ := configValue.Type(); typ.Kind() != reflect.Ptr || typ.Elem().Kind() != reflect.Struct {
 		return fmt.Errorf("configuration should be a pointer to a struct type")
 	}
 
-	err = getFromYAML(filename, configuration)
-	if err == nil {
-		getFromArguments(configuration)
-	}
-	if err == nil {
-		getFromEnvVariables(configuration)
-	}
+	setDefaults(configuration)
+	getFromYAML(filename, configuration)
+	getFromArguments(configuration)
+	getFromEnvVariables(configuration)
 
+	return
+}
+
+func getProgramName() string {
+
+	splitArg := strings.Split(os.Args[0], "\\")
+	if len(splitArg) <= 1 {
+		splitArg = strings.Split(os.Args[0], "/")
+	}
+	return strings.TrimSuffix(splitArg[len(splitArg)-1], ".exe")
+}
+
+func setDefaults(configuration interface{}) (err error) {
+	getFromEnvVariablesOrArguments(defaultTagName, getFromDefault, configuration)
 	return
 }
 
@@ -68,13 +87,21 @@ func getFromEnvVariables(configuration interface{}) {
 	getFromEnvVariablesOrArguments(envTagName, getFromEnv, configuration)
 }
 
-type getData func(string) string
+type getData func(reflect.StructField, string) string
 
-func getFromEnv(key string) string {
+func getFromDefault(p reflect.StructField, key string) string {
+	tagContent := p.Tag.Get(defaultTagName)
+	if len(tagContent) > 0 {
+		return tagContent
+	}
+	return ""
+}
+
+func getFromEnv(p reflect.StructField, key string) string {
 	return os.Getenv(key)
 }
 
-func getFromArg(key string) string {
+func getFromArg(p reflect.StructField, key string) string {
 	for i := range os.Args {
 		if strings.HasPrefix(os.Args[i], ("--" + key + "=")) {
 			return os.Args[i][len(key)+3:]
@@ -105,9 +132,9 @@ func getFromEnvVariablesOrArguments(tagName string, fnGetData getData, configura
 		tagContent := p.Tag.Get(tagName)
 		value := ""
 		if len(tagContent) > 0 {
-			value = fnGetData(tagContent)
+			value = fnGetData(p, tagContent)
 		} else {
-			value = fnGetData(p.Name)
+			value = fnGetData(p, p.Name)
 		}
 
 		if !p.Anonymous && len(value) > 0 {
