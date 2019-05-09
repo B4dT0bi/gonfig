@@ -27,12 +27,23 @@ func tmpFileWithContent(content string, t *testing.T) string {
 		t.Error("Error creating file with test data", err)
 	}
 
-	_, err = io.Copy(file, strings.NewReader("{}"))
+	_, err = io.Copy(file, strings.NewReader(content))
 	if err != nil {
 		t.Error("Error writing test data", err)
 	}
 
 	return file.Name()
+}
+
+func createFileWithContent(filename string, content string, t *testing.T) string {
+
+	err := ioutil.WriteFile(filename, []byte(content), 0644)
+
+	if err != nil {
+		t.Error("Error creating file with test data", err)
+	}
+
+	return filename
 }
 
 func Test_GetFromYAML_Filename_Should_Not_be_Panic(t *testing.T) {
@@ -47,6 +58,107 @@ func Test_GetFromYAML_Filename_Should_Not_be_Panic(t *testing.T) {
 
 	if err != nil {
 		t.Error("getFromYAML file not found", err)
+	}
+}
+
+func Test_GetFromYAML_Filename_Can_Not_Read(t *testing.T) {
+
+	filename := tmpFileWithContent("ID: abc", t)
+	defer os.Remove(filename)
+
+	type Conf struct {
+		ID int
+	}
+	conf := Conf{}
+	err := getFromYAML(filename, &conf)
+
+	if err == nil {
+		t.Error("getFromYAML should throw an error", err)
+	}
+	if conf.ID != 0 {
+		t.Error("ID should be 0", conf.ID)
+	}
+}
+
+func Test_GetFromYAML_Filename_Can_Read(t *testing.T) {
+
+	filename := tmpFileWithContent("ID: 123\nTestString: hallo", t)
+	defer os.Remove(filename)
+
+	type Conf struct {
+		ID         int
+		TestString string
+	}
+	conf := Conf{}
+	err := getFromYAML(filename, &conf)
+
+	if err != nil {
+		t.Error("getFromYAML file not found", err)
+	}
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
+	}
+	if conf.TestString != "hallo" {
+		t.Error("TestString should be hallo", conf.ID)
+	}
+}
+
+func Test_GetConfByFilename_Can_Read(t *testing.T) {
+
+	filename := tmpFileWithContent("ID: 123\nTestString: hallo", t)
+	defer os.Remove(filename)
+
+	type Conf struct {
+		ID         int
+		TestString string
+	}
+	conf := Conf{}
+	err := GetConfByFilename(filename, &conf)
+
+	if err != nil {
+		t.Error("GetConfByFilename unexpected error occured", err)
+	}
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
+	}
+	if conf.TestString != "hallo" {
+		t.Error("TestString should be hallo", conf.ID)
+	}
+}
+
+func Test_GetConf_Can_Read(t *testing.T) {
+
+	filename := createFileWithContent("gonfigtest.yaml", "ID: 123\nTestString: hallo", t)
+	oldArgs := os.Args
+	os.Args = []string{"gonfigtest", "--MYFLOAT32=123.123", "--MYFLOAT64", "456.456"}
+	defer func() {
+		os.Args = oldArgs
+		os.Remove(filename)
+	}()
+
+	type Conf struct {
+		ID         int
+		TestString string
+		MyFloat    float32 `arg:"MYFLOAT32"`
+		MYFLOAT64  float64
+	}
+	conf := Conf{}
+	err := GetConf(&conf)
+
+	if err != nil {
+		t.Error("GetConf unexpected error occured", err)
+	}
+	if conf.ID != 123 {
+		t.Error("ID should be 123", conf.ID)
+	}
+	if conf.TestString != "hallo" {
+		t.Error("TestString should be hallo", conf.TestString)
+	}
+	if conf.MyFloat != 123.123 {
+		t.Error("MyFloat should be 123.123", conf.MyFloat)
+	}
+	if conf.MYFLOAT64 != 456.456 {
+		t.Error("MYFLOAT64 should be 456.456", conf.MYFLOAT64)
 	}
 }
 

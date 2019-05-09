@@ -1,5 +1,5 @@
 // Package gonfig implements simple configuration reading
-// from both JSON files and environment variables.
+// from both YAML files and environment variables.
 package gonfig
 
 import (
@@ -9,6 +9,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"log"
 
 	"github.com/ghodss/yaml"
 )
@@ -18,14 +19,14 @@ const envTagName = "env"
 const argTagName = "arg"
 const defaultTagName = "default"
 
-// GetConf aggregates all the JSON and environment variable values
+// GetConf aggregates all the YAML and environment variable values
 // and puts them into the passed interface.
 func GetConf(configuration interface{}) (err error) {
-	GetConfByFilename(getProgramName()+".json", configuration)
+	GetConfByFilename(getProgramName()+".yaml", configuration)
 	return
 }
 
-// GetConfByFilename aggregates all the JSON and environment variable values
+// GetConfByFilename aggregates all the YAML and environment variable values
 // and puts them into the passed interface.
 func GetConfByFilename(filename string, configuration interface{}) (err error) {
 
@@ -64,15 +65,18 @@ func getFromYAML(filename string, configuration interface{}) (err error) {
 
 	file, err := os.Open(filename)
 	if err != nil {
+		log.Println("Could not open file : " + filename + " skipping reading config from YAML.")
 		return
 	}
 	defer file.Close()
 	data, err := ioutil.ReadAll(file)
 	if err != nil {
+		log.Println("Could not read from file : " + filename + " skipping reading config from YAML.")
 		return
 	}
 	err = yaml.Unmarshal(data, &configuration)
 	if err != nil {
+		log.Println("Could not unmarschal from file : " + filename + " skipping extracting config from YAML.")
 		return
 	}
 
