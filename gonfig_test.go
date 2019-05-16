@@ -128,7 +128,7 @@ func Test_GetConfByFilename_Can_Read(t *testing.T) {
 
 func Test_GetConf_Can_Read(t *testing.T) {
 
-	filename := createFileWithContent("gonfigtest.yaml", "ID: 123\nTestString: hallo", t)
+	filename := createFileWithContent("gonfigtest.yaml", "ID: 123\nTestString: hallo\nNotInStruct: this should not cause problems", t)
 	oldArgs := os.Args
 	os.Args = []string{"gonfigtest", "--MYFLOAT32=123.123", "--MYFLOAT64", "456.456"}
 	defer func() {
@@ -141,6 +141,7 @@ func Test_GetConf_Can_Read(t *testing.T) {
 		TestString string
 		MyFloat    float32 `arg:"MYFLOAT32"`
 		MYFLOAT64  float64
+		NotInYaml  int
 	}
 	conf := Conf{}
 	err := GetConf(&conf)
@@ -150,6 +151,9 @@ func Test_GetConf_Can_Read(t *testing.T) {
 	}
 	if conf.ID != 123 {
 		t.Error("ID should be 123", conf.ID)
+	}
+	if conf.NotInYaml != 0 {
+		t.Error("NotInYaml should be 0", conf.NotInYaml)
 	}
 	if conf.TestString != "hallo" {
 		t.Error("TestString should be hallo", conf.TestString)
