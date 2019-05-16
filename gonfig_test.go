@@ -650,3 +650,125 @@ func Test_getFromDefaults_should_find_and_parse_float32(t *testing.T) {
 		t.Error("ID should be 123.123", conf.ID)
 	}
 }
+
+func Test_GetConf_With_Overrides(t *testing.T) {
+
+	filename := createFileWithContent("gonfigtest.yaml", "ID: 1\nID2: 2\nTestString: hallo\nTestString2: hallo2\nID3: 3\nTestString3: hallo3", t)
+	oldArgs := os.Args
+	os.Args = []string{"gonfigtest", "--ID2=3", "--ID3=123", "--TestString2", "test2", "--TestString3", "test55"}
+	defer func() {
+		os.Args = oldArgs
+		os.Remove(filename)
+	}()
+
+	os.Setenv("ID3", "32")
+	os.Setenv("TestString3", "test3")
+
+	type Conf struct {
+		ID          int
+		TestString  string
+		ID2         int
+		TestString2 string
+		ID3         int    `default:"4242"`
+		TestString3 string `default:"fsdkflk"`
+		ID4         int    `default:"4"`
+		TestString4 string `default:"test4"`
+	}
+	conf := Conf{}
+	err := GetConf(&conf)
+
+	if err != nil {
+		t.Error("GetConf unexpected error occured", err)
+	}
+	if conf.ID != 1 {
+		t.Error("ID should be 1", conf.ID)
+	}
+	if conf.TestString != "hallo" {
+		t.Error("TestString should be hallo", conf.TestString)
+	}
+	if conf.ID2 != 3 {
+		t.Error("ID2 should be 3", conf.ID2)
+	}
+	if conf.TestString2 != "test2" {
+		t.Error("TestString2 should be test2", conf.TestString2)
+	}
+	if conf.ID3 != 32 {
+		t.Error("ID3 should be 32", conf.ID3)
+	}
+	if conf.TestString3 != "test3" {
+		t.Error("TestString3 should be test3", conf.TestString3)
+	}
+	if conf.ID4 != 4 {
+		t.Error("ID4 should be 4", conf.ID4)
+	}
+	if conf.TestString4 != "test4" {
+		t.Error("TestString4 should be test4", conf.TestString4)
+	}
+}
+
+func Test_Overrides(t *testing.T) {
+
+	filename := createFileWithContent("gonfigtest.yaml", "ID: 2\nTestString: fromYAML", t)
+	oldArgs := os.Args
+	os.Args = []string{"gonfigtest", "--ID=3", "--TestString", "fromARG"}
+	defer func() {
+		os.Args = oldArgs
+		os.Remove(filename)
+	}()
+
+	os.Setenv("ID", "4")
+	os.Setenv("TestString", "fromENV")
+
+	type Conf struct {
+		ID         int    `default:"1"`
+		TestString string `default:"fromDefault"`
+	}
+	conf := Conf{}
+
+	if conf.ID != 0 {
+		t.Error("ID should be 0", conf.ID)
+	}
+	if conf.TestString != "" {
+		t.Error("TestString should be empty", conf.TestString)
+	}
+
+	setDefaults(&conf)
+
+	if conf.ID != 1 {
+		t.Error("ID should be 1", conf.ID)
+	}
+	if conf.TestString != "fromDefault" {
+		t.Error("TestString should be fromDefault", conf.TestString)
+	}
+
+	err := getFromYAML(filename, &conf)
+
+	if err != nil {
+		t.Error("getFromYAML file not found", err)
+	}
+
+	if conf.ID != 2 {
+		t.Error("ID should be 2", conf.ID)
+	}
+	if conf.TestString != "fromYAML" {
+		t.Error("TestString should be fromYAML", conf.TestString)
+	}
+
+	getFromArguments(&conf)
+
+	if conf.ID != 3 {
+		t.Error("ID should be 3", conf.ID)
+	}
+	if conf.TestString != "fromARG" {
+		t.Error("TestString should be fromARG", conf.TestString)
+	}
+
+	getFromEnvVariables(&conf)
+
+	if conf.ID != 4 {
+		t.Error("ID should be 4", conf.ID)
+	}
+	if conf.TestString != "fromENV" {
+		t.Error("TestString should be fromENV", conf.TestString)
+	}
+}
